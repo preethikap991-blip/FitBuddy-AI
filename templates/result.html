@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-heading">
+    <span class="eyebrow">PERSONALIZED RESULT</span>
+    <h1>Hi, {{ username }} 👋</h1>
+    {% if message %}<div class="success">{{ message }}</div>{% endif %}
+</section>
+
+<section class="profile-grid">
+    <div class="stat"><span>User ID</span><strong>{{ user_id }}</strong></div>
+    <div class="stat"><span>Age</span><strong>{{ age }}</strong></div>
+    <div class="stat"><span>Weight</span><strong>{{ weight }} kg</strong></div>
+    <div class="stat"><span>Goal</span><strong>{{ goal }}</strong></div>
+    <div class="stat"><span>Intensity</span><strong>{{ intensity }}</strong></div>
+</section>
+
+<section class="card">
+    <div class="section-title">
+        <h2>7-Day Workout Plan</h2>
+        <span class="pill">{{ "Updated" if original_plan != workout_plan else "Original" }}</span>
+    </div>
+    <pre class="plan">{{ workout_plan }}</pre>
+</section>
+
+<section class="card tip">
+    <h2>🥗 Nutrition / Recovery Tip</h2>
+    <p>{{ nutrition_tip }}</p>
+</section>
+
+<section class="card">
+    <h2>Improve your plan</h2>
+    <p>Tell FitBuddy what you would like changed. Examples: “more cardio”, “include more rest”, or “make the routine simpler”.</p>
+    <form action="/submit-feedback" method="post">
+        <input type="hidden" name="user_id" value="{{ user_id }}">
+        <textarea name="feedback" rows="5" maxlength="2000" required placeholder="Enter your feedback..."></textarea>
+        <button type="submit">Update Plan with AI →</button>
+    </form>
+</section>
+
+<a class="secondary-button" href="/">← Create another plan</a>
+{% endblock %}

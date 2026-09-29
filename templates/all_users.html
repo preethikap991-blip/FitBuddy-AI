@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-heading">
+    <span class="eyebrow">ADMIN / COACH VIEW</span>
+    <h1>All Users</h1>
+    <p>Review stored user details and original/updated plans.</p>
+</section>
+
+{% if not users %}
+<div class="card empty">
+    <h2>No users yet</h2>
+    <p>Create a plan from the home page and it will appear here.</p>
+</div>
+{% endif %}
+
+{% for user in users %}
+<section class="card admin-card">
+    <div class="section-title">
+        <div>
+            <h2>{{ user.username }}</h2>
+            <p class="muted">{{ user.user_id }} · {{ user.goal }} · {{ user.intensity }}</p>
+        </div>
+        <span class="pill">{{ user.age }} yrs · {{ user.weight }} kg</span>
+    </div>
+
+    {% if user.plan %}
+    <div class="admin-plans">
+        <div>
+            <h3>Original Plan</h3>
+            <pre class="plan compact">{{ user.plan.original_plan }}</pre>
+        </div>
+        <div>
+            <h3>Updated Plan</h3>
+            {% if user.plan.updated_plan %}
+                <pre class="plan compact">{{ user.plan.updated_plan }}</pre>
+            {% else %}
+                <p class="muted">No feedback update yet.</p>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</section>
+{% endfor %}
+{% endblock %}
